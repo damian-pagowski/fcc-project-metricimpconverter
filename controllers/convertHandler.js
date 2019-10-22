@@ -8,14 +8,42 @@
 
 function ConvertHandler () {
   this.getNum = function (input) {
-    var result = Number(input.replace(/[^0-9\.]+/g, ''))
-    console.log('VALUE: ' + result)
-    return result.toFixed(5)
+    const regex = /^[0-9]+[,.]?[0-9]*([\/][0-9]+[,.]?[0-9]*)*/
+    const matches = input.match(regex)
+    console.log('MATCHED WITH REGEX: : ' + matches)
+    if (matches) {
+      let result
+      const split = matches[0].split('/')
+      if (split.length == 2) {
+        if (split[0].match(/[\.]/) || split[1].match(/[\.]/)) {
+          result = NaN
+        } else {
+          console.log('FRACTION')
+          result = parseInt(split[0], 10) / parseInt(split[1], 10)
+        }
+      } else {
+        console.log('DECIMAL')
+        result = matches[0]
+      }
+      if (!isNaN(result)) {
+        return Number(result).toFixed(5)
+      }
+    }
+    return 'Invalid Number'
   }
 
   this.getUnit = function (input) {
-    let index = input.search(/[A-Za-z]{2,3}$/)
-    var result = index > 0 ? input.slice(index) : null
+    const inp = input.toLowerCase()
+    let index = inp.search(/[A-Za-z]{1,3}$/)
+    var input = [
+      'gal',
+      'l',
+      'mi',
+      'km',
+      'lbs',
+      'kg'
+    ]
+    var result = index > 0 ? input.includes(inp.slice(index)) ? inp.slice(index) : "Invalid Unit" : "Invalid Unit"
     console.log('UNITS: ' + result)
     return result
   }
@@ -23,7 +51,7 @@ function ConvertHandler () {
   this.getReturnUnit = function (initUnit) {
     let returnUnit
     console.log('Init Unit: ' + initUnit)
-    switch (initUnit) {
+    switch (initUnit.toLowerCase()) {
       case 'gal':
         returnUnit = 'l'
         break
@@ -93,6 +121,10 @@ function ConvertHandler () {
         result = initNum / miToKm
         break
     }
+    result = parseFloat(result)
+    console.log("CONVERT VALUE: " + result)
+    console.log("CONVERT TYPE: " + typeof result)
+
     return result.toFixed(5)
   }
 
