@@ -35,16 +35,11 @@ function ConvertHandler () {
   this.getUnit = function (input) {
     const inp = input.toLowerCase()
     let index = inp.search(/[A-Za-z]{1,3}$/)
-    var input = [
-      'gal',
-      'l',
-      'mi',
-      'km',
-      'lbs',
-      'kg'
-    ]
-    var result = index > 0 ? input.includes(inp.slice(index)) ? inp.slice(index) : "Invalid Unit" : "Invalid Unit"
-    console.log('UNITS: ' + result)
+    var input = ['gal', 'l', 'mi', 'km', 'lbs', 'kg']
+    var result =
+      index > 0
+        ? input.includes(inp.slice(index)) ? inp.slice(index) : 'Invalid Unit'
+        : 'Invalid Unit'
     return result
   }
 
@@ -93,7 +88,7 @@ function ConvertHandler () {
       case 'km':
         return 'kilometers'
     }
-    return result
+    return 'Invalid Unit'
   }
 
   this.convert = function (initNum, initUnit) {
@@ -122,8 +117,8 @@ function ConvertHandler () {
         break
     }
     result = parseFloat(result)
-    console.log("CONVERT VALUE: " + result)
-    console.log("CONVERT TYPE: " + typeof result)
+    console.log('CONVERT VALUE: ' + result)
+    console.log('CONVERT TYPE: ' + typeof result)
 
     return result.toFixed(5)
   }

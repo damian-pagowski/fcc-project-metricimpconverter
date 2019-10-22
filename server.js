@@ -4,7 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const expect = require('chai').expect
 const cors = require('cors')
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000
 const apiRoutes = require('./routes/api.js')
 const fccTestingRoutes = require('./routes/fcctesting.js')
 const runner = require('./test-runner')
@@ -39,7 +39,7 @@ app.use(function (req, res, next) {
 // Start our server and tests!
 app.listen(port, function () {
   console.log('Listening on port ' + port)
-  // if (process.env.NODE_ENV === 'test') {
+  if (process.env.NODE_ENV === 'test') {
     console.log('Running Tests...')
     setTimeout(function () {
       try {
@@ -50,7 +50,7 @@ app.listen(port, function () {
         console.log(error)
       }
     }, 1500)
-  // }
+  }
 })
 
 module.exports = app // for testing
