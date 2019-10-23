@@ -10,7 +10,9 @@ var chaiHttp = require('chai-http')
 var chai = require('chai')
 var assert = chai.assert
 var server = require('../server')
-
+const INVALID_UNIT = 'invalid unit'
+const INVALID_NUMBER = 'invalid number'
+const INVALID_UNIT_AND_NUM = 'invalid number and unit'
 chai.use(chaiHttp)
 
 suite('Functional Tests', function () {
@@ -42,7 +44,7 @@ suite('Functional Tests', function () {
           .query({ input: '32g' })
           .end(function (err, res) {
             assert.equal(res.status, 400)
-            assert.equal(res.body.error, 'Invalid Parameter')
+            assert.equal(res.body.error, INVALID_UNIT)
             done()
           })
       })
@@ -54,7 +56,7 @@ suite('Functional Tests', function () {
           .query({ input: '3/7.2/4kg' })
           .end(function (err, res) {
             assert.equal(res.status, 400)
-            assert.equal(res.body.error, 'Invalid Parameter')
+            assert.equal(res.body.error, INVALID_NUMBER)
             done()
           })
       })
@@ -65,10 +67,10 @@ suite('Functional Tests', function () {
         chai
           .request(server)
           .get('/api/convert')
-          .query({ input: '3/7.2/4kg' })
+          .query({ input: '3/7.2/4kilomegagram' })
           .end(function (err, res) {
             assert.equal(res.status, 400)
-            assert.equal(res.body.error, 'Invalid Parameter')
+            assert.equal(res.body.error, INVALID_UNIT_AND_NUM)
             done()
           })
       })
@@ -80,7 +82,7 @@ suite('Functional Tests', function () {
           .query({ input: 'kg' })
           .end(function (err, res) {
             assert.equal(res.status, 400)
-            assert.equal(res.body.error, 'Invalid Parameter')
+            assert.equal(res.body.error, INVALID_NUMBER)
             done()
           })
       })

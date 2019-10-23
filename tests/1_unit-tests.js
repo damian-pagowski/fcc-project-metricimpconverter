@@ -11,6 +11,9 @@ var assert = chai.assert
 var ConvertHandler = require('../controllers/convertHandler.js')
 var expect = require('chai').expect
 var convertHandler = new ConvertHandler()
+const INVALID_UNIT = 'invalid unit'
+const INVALID_NUMBER = 'invalid number'
+const INVALID_UNIT_AND_NUM = 'invalid number and unit'
 
 suite('Unit Tests', function () {
   suite('Function convertHandler.getNum(input)', function () {
@@ -34,19 +37,19 @@ suite('Unit Tests', function () {
 
     test('Fractional Input w/ Decimal', function (done) {
       const input = '1/2.565L'
-      assert.equal(convertHandler.getNum(input), 'Invalid Number')
+      assert.equal(convertHandler.getNum(input), INVALID_NUMBER)
       done()
     })
 
     test('Invalid Input (double fraction)', function (done) {
       const input = '1/2/565L'
-      assert.equal(convertHandler.getNum(input), 'Invalid Number')
+      assert.equal(convertHandler.getNum(input), INVALID_NUMBER)
       done()
     })
 
     test('No Numerical Input', function (done) {
       const input = 'TENLITERS'
-      assert.equal(convertHandler.getNum(input), 'Invalid Number')
+      assert.equal(convertHandler.getNum(input), INVALID_NUMBER)
       done()
     })
   })
@@ -77,8 +80,7 @@ suite('Unit Tests', function () {
     })
 
     test('Unknown Unit Input', function (done) {
-      const expectedOutput = 'Invalid Unit'
-      assert.equal(convertHandler.getUnit('12stones'), expectedOutput)
+      assert.equal(convertHandler.getUnit('12stones'), INVALID_UNIT)
       done()
     })
   })

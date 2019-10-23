@@ -10,6 +10,9 @@
 
 var expect = require('chai').expect
 var ConvertHandler = require('../controllers/convertHandler.js')
+const INVALID_UNIT = 'invalid unit'
+const INVALID_NUMBER = 'invalid number'
+const INVALID_UNIT_AND_NUM = 'invalid number and unit'
 
 module.exports = function (app) {
   var convertHandler = new ConvertHandler()
@@ -26,9 +29,13 @@ module.exports = function (app) {
       returnNum,
       returnUnit
     )
-    console.log(string)
-    if (initUnit === 'Invalid Unit' || initNum === 'Invalid Number') {
-      res.status(400).json({ error: "Invalid Parameter" })
+
+    if (initUnit === INVALID_UNIT && initNum === INVALID_NUMBER) {
+      res.status(400).json({ error: INVALID_UNIT_AND_NUM })
+    } else if (initUnit === INVALID_UNIT) {
+      res.status(400).json({ error: INVALID_UNIT })
+    } else if (initNum === INVALID_NUMBER) {
+      res.status(400).json({ error: INVALID_NUMBER })
     } else {
       res.json({ initNum, initUnit, returnNum, returnUnit, string })
     }

@@ -5,6 +5,9 @@
 *
 *
 */
+const INVALID_UNIT = 'invalid unit'
+const INVALID_NUMBER = 'invalid number'
+const INVALID_UNIT_AND_NUM = 'invalid number and unit'
 
 function ConvertHandler () {
   this.getNum = function (input) {
@@ -29,7 +32,7 @@ function ConvertHandler () {
         return Number(result).toFixed(5)
       }
     }
-    return 'Invalid Number'
+    return INVALID_NUMBER
   }
 
   this.getUnit = function (input) {
@@ -37,9 +40,9 @@ function ConvertHandler () {
     let index = inp.search(/[A-Za-z]{1,3}$/)
     var input = ['gal', 'l', 'mi', 'km', 'lbs', 'kg']
     var result =
-      index > 0
-        ? input.includes(inp.slice(index)) ? inp.slice(index) : 'Invalid Unit'
-        : 'Invalid Unit'
+      index >= 0
+        ? input.includes(inp.slice(index)) ? inp.slice(index) : INVALID_UNIT
+        : INVALID_UNIT
     return result
   }
 
@@ -67,7 +70,7 @@ function ConvertHandler () {
         break
 
       default:
-        returnUnit = 'invalid unit'
+        returnUnit = INVALID_UNIT
     }
     console.log('Return Unit : ' + returnUnit)
     return returnUnit
